@@ -17,7 +17,6 @@ from roll.utils.context_managers import state_offload_manger
 from roll.utils.functionals import (
     append_to_dict,
 )
-from roll.utils.cuda_ipc_utils import MultiprocessingSerializer
 from roll.utils.offload_states import OffloadStateType
 from roll.pipeline.distill.various_divergence import VariousDivergence, GPTLMLoss
 
@@ -59,9 +58,9 @@ class StudentWorker(Worker):
         """
         global_step = data.meta_info.get("global_step", 0)
         is_offload_states = data.meta_info.get("is_offload_states", True)
-        # 获取teacher logits
-        self.teacher_logits = MultiprocessingSerializer.deserialize(
-            data.meta_info.get("teacher_logits_handles")[self.rank_info.rank])
+        
+        logits_ref = data.meta_info.get("teacher_logits_handles")[self.rank_info.rank]
+        self.teacher_logits = ray.get(logits_ref)  # GPU tensor directly
         metrics = {}
         self.logger.info(f"is_offload_states: {is_offload_states}")
         with state_offload_manger(
@@ -181,5 +180,6 @@ class TeacherWorker(Worker):
             self.logits = None
             if forward_output:
                 self.logits = forward_output['logits']
-        return MultiprocessingSerializer.serialize(self.logits)
+        
+        return ray.put(self.logits)
 
