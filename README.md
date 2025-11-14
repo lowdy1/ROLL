@@ -79,7 +79,7 @@ Leveraging a multi-role distributed architecture with Ray for flexible resource 
 [Checkpoint Saving and Resuming Guide](https://alibaba.github.io/ROLL/docs/UserGuide/checkpoint_and_resume)  
 [Converting MCoreAdapter Models to Hugging Face Format](https://alibaba.github.io/ROLL/docs/UserGuide/megatron_convert_2_hf)  
 [Quick Start: Single-Node Deployment Guide](https://alibaba.github.io/ROLL/docs/QuickStart/single_node_quick_start)  
-[Quick Start: Multi-Node Deployment Guide](hhttps://alibaba.github.io/ROLL/docs/QuickStart/multi_nodes_quick_start)  
+[Quick Start: Multi-Node Deployment Guide](https://alibaba.github.io/ROLL/docs/QuickStart/multi_nodes_quick_start)  
 [Frequently Asked Questions](https://alibaba.github.io/ROLL/docs/QuickStart/qa_issues)
 
 ### UserGuide
